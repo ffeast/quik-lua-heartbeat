@@ -14,6 +14,8 @@ SLEEP_PERIOD_MSEC = 60 * 1000
 -- the metrics file will be rewritten after this number of write_metrics call
 -- to prevent infinite metrics file growth
 REWRITE_EVERY_N_RECORDS = 1000
+-- number of attempts to open the file
+MAX_WRITE_ATTEMPTS = 10
 
 function write_metrics(metrics, counter)
     local mode
@@ -23,8 +25,23 @@ function write_metrics(metrics, counter)
         mode = 'a'
     end
 
-    local file = io.open(METRICS_PATH, mode)
-    local ts = os.time(os.date('!*t'))
+    local file
+    local tries = 0
+    while tries < MAX_WRITE_ATTEMPTS do
+        file = io.open(METRICS_PATH, mode)
+        if file ~= nil then
+            break
+        end
+        tries = tries + 1
+    end
+    if file == nil then
+        error('Unable to open '
+              .. METRICS_PATH
+              .. ' in mode "' .. tostring(mode) .. '" after '
+              .. tostring(MAX_WRITE_ATTEMPTS)
+              .. ' attempts')
+    end
+    local ts = os.time(os.date('*t'))
     for key, value in pairs(metrics) do
         file:write(ts .. ':' .. key .. ':' .. value .. '\n')
     end
