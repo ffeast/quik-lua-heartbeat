@@ -39,3 +39,10 @@ The settings can be changed in the `heartbeat.lua` itself
 * `METRICS_PATH` - where the metrics file needs to be written to
 * `REWRITE_EVERY_N_RECORDS` - how often the metrics file needs to be truncated to avoid its infinite growth
 * `SLEEP_PERIOD_MSEC` - the delay between metrics collection/writes. It's set to __1 minute__ by default. Feel free to set any meaningful value 
+
+# Example
+This is how it might look like when the metrics are dispatched to [Amazon CloudWatch](https://aws.amazon.com/ru/cloudwatch/):  
+![](images/cloudwatch_table.png)
+
+# How to use it with AWS
+Please check out [this](https://github.com/ffeast/aws-metrics-sender) service - it solves exactly this problem on Windows boxes
