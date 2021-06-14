@@ -1,6 +1,6 @@
 # quik-lua-heartbeat
 
-It's just simple `lua` script to track what's going on with a [QUIK](https://arqatech.com/ru/products/quik/terminals/user-applications/quik-workstation/) trading terminal.
+It's a simple `lua` script to track what's going on with a [QUIK](https://arqatech.com/ru/products/quik/terminals/user-applications/quik-workstation/) trading terminal.
 The script is to be run from inside QUIK so that it always knows what's happening.
 
 The metrics file is meant to be polled by an external tool to write its updates
